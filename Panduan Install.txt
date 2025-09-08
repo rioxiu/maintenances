@@ -1,0 +1,27 @@
+Panduan Installasi Manual Localhost:
+1. Copy Source code file helpdesk.rar ke di Direktori c:\xampp\htdocs atau c:\laragon\www
+2. Klik kanan file helpdesk.rar > WinRAR > Extract Here
+3. Buka Browser Chrome, masuk phpMyAdmin di localhost/phpmyadmin
+4. Klik New > Buat database baru dengan nama "helpdesk" lalu klik Database "helpdesk" yang tadi dibuat lalu ke Tabs Import
+5. Choose File Database yaitu file helpdesk.sql, lalu klik Go/Oke
+6. Untuk mengubah koneksi database ada di file lokasi folder helpdesk > application > config > database.php
+7. Untuk mengubah default Nama dan Copyright DLL ada di file lokasi folder kasir > application > config > site.php
+8. Gunakan PHP dengan versi 7.4
+
+Panduan Installasi Manual Hosting cPanel:
+1. Buat baru file helpdesk.zip tanpa password dari folder helpdesk lalu upload ke di File Manager Direktori /public_html
+2. Klik file helpdesk.zip lalu klik Extract
+3. Kembali ke cPanel Home lalu ke MySQL Database Wizard
+4. Buat Nama Database Baru helpdesk, Username dan Password Database, Lanjut Pada User Privileges Lalu centang All Privileges lalu klik Make Changes
+3. Buka phpMyAdmin di cPanel > MySQL > phpmyadmin
+4. Klik pada Database "helpdesk" yang tadi dibuat lalu ke Tabs Import
+5. Choose File Database yaitu file helpdesk.sql, lalu klik Go/Oke
+6. Untuk mengubah koneksi database ada di file lokasi folder helpdesk > application > config > database.php
+7. Untuk mengubah default Nama dan Copyright DLL ada di file lokasi folder kasir > application > config > site.php
+8. Gunakan PHP dengan versi 7.4
+
+Penting! Koneksi Database Wajib diganti dan disesuaikan dengan konfigurasi Hosting/VPS milik anda (database, username dan password):
+database.default.hostname = localhost
+database.default.database = helpdesk
+database.default.username = root
+database.default.password = 

@@ -65,42 +65,99 @@ class Ticket_user extends MY_Controller
 	{
 		//User harus User, tidak boleh role user lain
 		if ($this->session->userdata('level') == "User") {
-			//Menyusun template Buat ticket
-			$data['title'] 	  = "Buat Tiket";
+			$data['title']    = lang('ticket_create');
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
 			$data['body']     = "ticketUser/buatticket";
 
-			//Session
-			$id_dept 	= $this->session->userdata('id_dept');
-			$id_user 	= $this->session->userdata('id_user');
+			// Dropdown yang sudah ada
+			$data['dd_lokasi']          = $this->model->dropdown_lokasi();
+			$data['id_lokasi']          = "";
+			$data['dd_kategori']        = $this->model->dropdown_kategori();
+			$data['id_kategori']        = "";
+			$data['dd_sub_kategori']    = $this->model->dropdown_sub_kategori($data['id_kategori']);
+			$data['id_sub_kategori']    = "";
 
-			//Get kode ticket yang akan digunakan sebagai id_ticket menggunakan model(getkodeticket)
-			$data['ticket'] = $this->model->getkodeticket();
+			// 1. TAMBAHKAN KEDUA DROPDOWN INI
+			$data['dd_teknisi'] = $this->model->dropdown_teknisi();
+			$data['id_teknisi'] = "";
+			$data['dd_prioritas'] = $this->model->dropdown_prioritas();
+			$data['id_prioritas'] = "";
 
-			//Mengambil semua data profile user yang sedang login menggunakan model (profile)
-			$data['profile'] = $this->model->profile($id_user)->row_array();
-
-			//Dropdown pilih kategori, menggunakan model (dropdown_kategori), nama kategori ditampung pada 'dd_kategori', data yang akan di simpan adalah id_kategori dan akan ditampung pada 'id_kategori'
-			$data['dd_kategori'] = $this->model->dropdown_kategori();
-			$data['id_kategori'] = "";
-
-			//Dropdown pilih sub kategori, menggunakan model (dropdown_sub_kategori), nama kategori ditampung pada 'dd_sub_kategori', data yang akan di simpan adalah id_sub_kategori dan akan ditampung pada 'id_sub_kategori'
-			$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori('');
-			$data['id_sub_kategori'] = "";
-
-			//Dropdown pilih lokasi, menggunakan model (dropdown_lokasi), nama kondisi ditampung pada 'dd_lokasi', data yang akan di simpan adalah id_lokasi dan akan ditampung pada 'id_lokasi'
-			$data['dd_lokasi'] = $this->model->dropdown_lokasi();
-			$data['id_lokasi'] = "";
-
-			$data['error'] = "";
-
-			//Load template
 			$this->load->view('template', $data);
 		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan User
-			//Akan dibawa ke Controller Errorpage
 			redirect('Errorpage');
+		}
+	}
+
+
+	public function proses_ticket()
+	{
+		// 2. TAMBAHKAN VALIDASI UNTUK TEKNISI DAN PRIORITAS
+		$this->form_validation->set_rules(
+			'id_teknisi',
+			'Teknisi',
+			'required',
+			array('required' => 'Anda harus memilih Teknisi.')
+		);
+		$this->form_validation->set_rules(
+			'id_prioritas',
+			'Prioritas',
+			'required',
+			array('required' => 'Anda harus memilih Prioritas tiket.')
+		);
+
+		// Validasi lain
+		$this->form_validation->set_rules('problem_summary', 'Problem_summary', 'required');
+		$this->form_validation->set_rules('problem_detail', 'Problem_detail', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->buat_ticket();
+		} else {
+			$id_user   = $this->session->userdata('id_user');
+			$date      = date("Y-m-d H:i:s");
+			$id        = $this->model->get_id_ticket();
+
+			// 3. SUSUN DATA TIKET SECARA LENGKAP
+			$datatiket = array(
+				'id_ticket'         => $id,
+				'tanggal'           => $date,
+				'id_user'           => $id_user,
+				'id_lokasi'         => $this->input->post('id_lokasi'),
+				'id_kategori'       => $this->input->post('id_kategori'),
+				'id_sub_kategori'   => $this->input->post('id_sub_kategori'),
+				'problem_summary'   => htmlspecialchars($this->input->post('problem_summary')),
+				'problem_detail'    => htmlspecialchars($this->input->post('problem_detail')),
+				'id_prioritas'      => $this->input->post('id_prioritas'), // <-- SIMPAN PRIORITAS
+				'status'            => 3, // Status 3: Assigned to Technician
+				'teknisi'           => $this->input->post('id_teknisi') // <-- SIMPAN TEKNISI
+			);
+
+			// ... (logika upload file tetap sama) ...
+			$config['upload_path']   = './uploads/';
+			$this->load->library('upload', $config);
+			if ($_FILES['filefoto']['name'] != "" && $this->upload->do_upload('filefoto')) {
+				$gambar = $this->upload->data();
+				$datatiket['filefoto'] = $gambar['file_name'];
+			}
+
+			$this->db->insert('ticket', $datatiket);
+			$id_ticket = $this->db->insert_id();
+
+			$datatracking = array(
+				'id_ticket'  => $id_ticket,
+				'tanggal'    => $date,
+				'status'     => "Assigned to Technician",
+				'deskripsi'  => "Tiket dibuat oleh pengguna dan langsung ditugaskan.",
+				'id_user'    => $id_user
+			);
+			$this->db->insert('tracking', $datatracking);
+
+			// Kirim email notifikasi ke teknisi yang bersangkutan
+			$this->model->emailtugas($id_ticket);
+
+			$this->session->set_flashdata('status', 'Success');
+			redirect('ticket_user/myticket');
 		}
 	}
 
@@ -134,6 +191,15 @@ class Ticket_user extends MY_Controller
 			array(
 				'required' => '<strong>Failed!</strong> Lokasi Harus dipilih.'
 			)
+		);
+
+
+		// TAMBAHKAN VALIDASI INI
+		$this->form_validation->set_rules(
+			'id_teknisi',
+			'Id_teknisi',
+			'required',
+			array('required' => '<strong>Failed!</strong> Teknisi Harus dipilih.')
 		);
 
 		//Form validasi untuk subject dengan nama validasi = problem_summary
@@ -267,7 +333,8 @@ class Ticket_user extends MY_Controller
 						'id_sub_kategori' 	=> $this->input->post('id_sub_kategori'),
 						'problem_summary'	=> ucfirst($this->input->post('problem_summary')),
 						'problem_detail'	=> ucfirst($this->input->post('problem_detail')),
-						'status'    		=> 1,
+						'status'    		=> 3, // <-- UBAH STATUS MENJADI 3
+						'teknisi'           => $this->input->post('id_teknisi'), // <-- TAMBAHKAN BARIS INI
 						'progress'			=> 0,
 						'filefoto'			=> 'no-image.jpg',
 						'id_lokasi'			=> $this->input->post('id_lokasi')
@@ -314,7 +381,8 @@ class Ticket_user extends MY_Controller
 					'id_sub_kategori' 	=> $this->input->post('id_sub_kategori'),
 					'problem_summary'	=> ucfirst($this->input->post('problem_summary')),
 					'problem_detail'	=> ucfirst($this->input->post('problem_detail')),
-					'status'    		=> 1,
+					'status'    		=> 3, // <-- UBAH STATUS MENJADI 3
+					'teknisi'           => $this->input->post('id_teknisi'), // <-- TAMBAHKAN BARIS INI
 					'progress'			=> 0,
 					'filefoto'			=> $gambar['file_name'],
 					'id_lokasi'			=> $this->input->post('id_lokasi')

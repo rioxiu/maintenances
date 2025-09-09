@@ -1,6 +1,6 @@
 <script language="javascript" type="text/javascript">
-	$(document).ready(function () {
-		$("#id_kategori").change(function () {
+	$(document).ready(function() {
+		$("#id_kategori").change(function() {
 			var data = {
 				id_kategori: $("#id_kategori").val()
 			};
@@ -8,7 +8,7 @@
 				type: "POST",
 				url: "<?= site_url('select/select_sub') ?>",
 				data: data,
-				success: function (msg) {
+				success: function(msg) {
 					$('#div-order').html(msg);
 				}
 			});
@@ -18,14 +18,14 @@
 </script>
 
 <div class="container-fluid">
-	<h1 class="h3 mb-0 text-gray-800 font-weight-bold"><?= lang(line: "ticket_create_title")?></h1>
-	<p class="mb-3"><?= lang(line: "ticket_create_subtitle")?></p>
+	<h1 class="h3 mb-0 text-gray-800 font-weight-bold"><?= lang(line: "ticket_create_title") ?></h1>
+	<p class="mb-3"><?= lang(line: "ticket_create_subtitle") ?></p>
 
 	<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status') ?>"></div>
 
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary"><?= lang(line: "ticket_create_form_title")?></h6>
+			<h6 class="m-0 font-weight-bold text-primary"><?= lang(line: "ticket_create_form_title") ?></h6>
 		</div>
 		<div class="card-body">
 			<form method="post" action="<?= site_url('ticket_user/submit') ?>" enctype="multipart/form-data">
@@ -36,7 +36,7 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="form-group">
-							<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_issue")?><span
+							<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_issue") ?><span
 									class="text-danger small">*Required</span></label>
 							<?= form_dropdown('id_kategori', $dd_kategori, set_value('id_kategori'), 'id="id_kategori" class="form-control ' . (form_error('id_kategori') ? "is-invalid" : "") . ' "'); ?>
 							<div class="invalid-feedback">
@@ -46,7 +46,7 @@
 					</div>
 					<div class="col-sm-4">
 						<div class="form-group">
-							<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_department")?> <span
+							<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_department") ?> <span
 									class="text-danger small">*Required</span></label>
 							<div id="div-order">
 								<?= form_dropdown('id_sub_kategori', $dd_sub_kategori, set_value('id_sub_kategori'), ' class="form-control ' . (form_error('id_sub_kategori') ? "is-invalid" : "") . ' "'); ?>
@@ -58,7 +58,7 @@
 					</div>
 					<div class="col-sm-4">
 						<div class="form-group">
-							<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_location")?><span
+							<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_location") ?><span
 									class="text-danger small">*Required</span></label>
 							<?= form_dropdown('id_lokasi', $dd_lokasi, set_value('id_lokasi'), ' class="form-control ' . (form_error('id_lokasi') ? "is-invalid" : "") . '" '); ?>
 							<div class="invalid-feedback">
@@ -66,10 +66,23 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="form-group">
+						<label class="font-weight-bold">Tugaskan ke Teknisi<span class="text-danger small">*Required</span></label>
+						<?php
+						$dd_teknisi_attribute = 'class="form-control ' . (form_error('id_teknisi') ? "is-invalid" : "") . '" id="id_teknisi" required';
+						echo form_dropdown('id_teknisi', $dd_teknisi, set_value('id_teknisi', $id_teknisi), $dd_teknisi_attribute);
+						?>
+						<div class="invalid-feedback">
+							<?= form_error('id_teknisi'); ?>
+						</div>
+					</div>
+					
+					
 				</div>
 
 				<div class="form-group">
-					<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_subject")?><span
+					<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_subject") ?><span
 							class="text-danger small">*Required</span></label>
 					<input class="form-control <?= (form_error('problem_summary') ? "is-invalid" : "") ?>"
 						name="problem_summary" placeholder="Judul" value="<?= set_value('problem_summary'); ?>">
@@ -79,7 +92,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_description")?><span
+					<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_description") ?><span
 							class="text-danger small">*Required</span></label>
 					<textarea name="problem_detail" placeholder=""
 						class="form-control <?= (form_error('problem_detail') ? "is-invalid" : "") ?>"
@@ -90,9 +103,9 @@
 				</div>
 
 				<div class="form-group">
-					<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_attachment")?><span
+					<label class="mb-1 font-weight-bold"><?= lang(line: "ticket_create_attachment") ?><span
 							class="text-danger small">*Required</span></label>
-					<p class="small mb-3"><?= lang(line: "ticket_create_attachment_subtitle")?></p>
+					<p class="small mb-3"><?= lang(line: "ticket_create_attachment_subtitle") ?></p>
 					<input type="file" name="filefoto" size="20"
 						class="<?= (form_error('filefoto') ? "is-invalid" : "") ?>">
 					<div class="invalid-feedback">
@@ -101,7 +114,7 @@
 					<div class="text-danger pt-1"><?= $error; ?></div>
 				</div>
 
-				<button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i> <?= lang(line: "ticket_create_submit")?>t</button>
+				<button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i> <?= lang(line: "ticket_create_submit") ?>t</button>
 
 			</form>
 		</div>
@@ -119,7 +132,7 @@
 		})
 	}
 
-	$('textarea').keypress(function (event) {
+	$('textarea').keypress(function(event) {
 		if (event.which == 13) {
 			event.preventDefault();
 			var s = $(this).val();

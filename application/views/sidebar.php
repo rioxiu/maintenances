@@ -100,30 +100,16 @@
 		<!--Menu Untuk Teknisi-->
 	<?php
 	} else if ($this->session->userdata('level') == "Technician") { ?>
-		<!-- Divider -->
-		<hr class="sidebar-divider my-0">
-		<!-- Nav Item - Dashboard -->
-		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
-			<a class="nav-link" href="<?= site_url('dashboard') ?>">
-				<i class="fas fa-fw fa-tachometer-alt"></i>
-				<span><?= lang(line: "dashboard_title")?></span></a>
-		</li>
-
-		<li class="nav-item <?= (uri_string() == 'ticket_teknisi/index_approve' ? 'active' : ''); ?>">
+		<li class="nav-item">
 			<a class="nav-link" href="<?= site_url('ticket_teknisi/index_approve') ?>">
-				<i class="fas fa-fw fa-ticket-alt"></i>
-				<span><?= lang(line: "dashboard_assigned_tickets")?></span>
-			</a>
+				<i class="fas fa-fw fa-inbox"></i>
+				<span>Tiket Masuk</span></a>
 		</li>
-
-		<li class="nav-item <?= (uri_string() == 'ticket_teknisi/index_tugas' ? 'active' : ''); ?>">
+		<li class="nav-item">
 			<a class="nav-link" href="<?= site_url('ticket_teknisi/index_tugas') ?>">
 				<i class="fas fa-fw fa-tasks"></i>
-				<span><?= lang(line: "dashboard_task_list")?></span>
-			</a>
+				<span>Daftar Tugas Saya</span></a>
 		</li>
-
-		<!--Menu Untuk User-->
 	<?php
 	} else if ($this->session->userdata('level') == "User") { ?>
 		<hr class="sidebar-divider my-0">
@@ -132,7 +118,7 @@
 			<a href="<?= site_url('ticket_user/buat') ?>" class="nav-link">
 				<div class="btn btn-success btn-lg shadow-sm btn-block">
 					<i class="fas fa-plus text-white"></i>
-					<span class="text"><?= lang(line: "ticket_create_title")?></span>
+					<span class="text"><?= lang(line: "ticket_create_title") ?></span>
 				</div>
 			</a>
 		</li>
@@ -143,45 +129,43 @@
 		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
 			<a class="nav-link " href="<?= site_url('dashboard') ?>">
 				<i class="fas fa-fw fa-tachometer-alt"></i>
-				<span><?= lang(line: "dashboard_title")?></span></a>
+				<span><?= lang(line: "dashboard_title") ?></span></a>
 		</li>
 
 		<li class="nav-item <?= (uri_string() == 'ticket_user' ? 'active' : ''); ?>">
 			<a class="nav-link" href="<?= site_url('ticket_user') ?>">
 				<i class="fas fa-fw fa-ticket-alt"></i>
-				<span><?= lang(line: "ticket_list_title")?></span>
+				<span><?= lang(line: "ticket_list_title") ?></span>
 			</a>
 		</li>
-	<?php }
-	
-	elseif ($this->session->userdata('level') == 'Viewer') {
-		?>
-		
-			<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
-				<a class="nav-link " href="<?= site_url('dashboard') ?>">
-					<i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>Dashboard</span></a>
-			</li>
-		
-			<!-- Nav Item - Dashboard -->
-			<div class="sidebar-heading pl-2">
-				Ticket
-			</div>
-	
-			<li class="nav-item <?= (uri_string() == 'ticket/index' ? 'active' : ''); ?>">
-				<a class="nav-link" href="<?= base_url('ticket/index') ?>">
-					<i class="fas fa-fw fa-ticket-alt"></i>
-					<span>Daftar Tiket</span></a>
-			</li>
-			<li class="nav-item <?= (uri_string() == 'statistik' ? 'active' : ''); ?>">
-				<a class="nav-link" href="<?= site_url('statistik') ?>">
-					<i class="fas fa-fw fa-chart-bar"></i>
-					<span>Laporan</span>
-				</a>
-			</li>
-			
-		<?php
-		}
+	<?php } elseif ($this->session->userdata('level') == 'Viewer') {
 	?>
-	
+
+		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
+			<a class="nav-link " href="<?= site_url('dashboard') ?>">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span></a>
+		</li>
+
+		<!-- Nav Item - Dashboard -->
+		<div class="sidebar-heading pl-2">
+			Ticket
+		</div>
+
+		<li class="nav-item <?= (uri_string() == 'ticket/index' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= base_url('ticket/index') ?>">
+				<i class="fas fa-fw fa-ticket-alt"></i>
+				<span>Daftar Tiket</span></a>
+		</li>
+		<li class="nav-item <?= (uri_string() == 'statistik' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('statistik') ?>">
+				<i class="fas fa-fw fa-chart-bar"></i>
+				<span>Laporan</span>
+			</a>
+		</li>
+
+	<?php
+	}
+	?>
+
 </ul>

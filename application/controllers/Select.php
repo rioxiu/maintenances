@@ -172,4 +172,28 @@ class Select extends CI_Controller
 
 		$this->load->view('combo/select_bulan', $data);
 	}
+
+	public function get_teknisi() {
+		 // Ambil ID dari request POST
+        $id_sub_kategori = $this->input->post('id');
+
+        // Panggil fungsi model untuk mencari teknisi
+        $teknisi = $this->model->get_teknisi_info_by_subkategori($id_sub_kategori);
+
+        // Siapkan array untuk response JSON
+        $response = array();
+        if ($teknisi) {
+            $response['status'] = 'success';
+            $response['nama_teknisi'] = $teknisi->nama;
+        } else {
+            $response['status'] = 'error';
+            $response['nama_teknisi'] = null;
+        }
+        
+        // Set header ke JSON dan kirim response
+        header('Content-Type: application/json');
+        echo json_encode($response);
+	}
+
+	
 }

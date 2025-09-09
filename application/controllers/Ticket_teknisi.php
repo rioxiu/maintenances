@@ -73,37 +73,37 @@ class Ticket_teknisi extends MY_Controller
 		}
 	}
 
-	public function detail_approve($id)
-	{
-		//User harus Teknisi, tidak boleh role user lain
-		if ($this->session->userdata('level') == "Technician") {
-			//Menyusun template Detail ticket
-			$data['title']    = "Detail Tiket";
-			$data['navbar']   = "navbar";
-			$data['sidebar']  = "sidebar";
-			$data['body']     = "ticketTeknisi/detailapprove";
+	// public function detail_approve($id)
+	// {
+	// 	//User harus Teknisi, tidak boleh role user lain
+	// 	if ($this->session->userdata('level') == "Technician") {
+	// 		//Menyusun template Detail ticket
+	// 		$data['title']    = "Detail Tiket";
+	// 		$data['navbar']   = "navbar";
+	// 		$data['sidebar']  = "sidebar";
+	// 		$data['body']     = "ticketTeknisi/detailapprove";
 
-			//Session
-			$id_dept = $this->session->userdata('id_dept');
-			$id_user = $this->session->userdata('id_user');
+	// 		//Session
+	// 		$id_dept = $this->session->userdata('id_dept');
+	// 		$id_user = $this->session->userdata('id_user');
 
-			//Detail setiap tiket yang belum di-approve, get dari model (detail_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'detail'
-			$data['detail'] = $this->model->detail_ticket($id)->row_array();
+	// 		//Detail setiap tiket yang belum di-approve, get dari model (detail_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'detail'
+	// 		$data['detail'] = $this->model->detail_ticket($id)->row_array();
 
-			//Tracking setiap tiket, get dari model (tracking_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'tracking'
-			$data['tracking'] = $this->model->tracking_ticket($id)->result();
+	// 		//Tracking setiap tiket, get dari model (tracking_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'tracking'
+	// 		$data['tracking'] = $this->model->tracking_ticket($id)->result();
 
-			//Message setiap tiket, get dari model (ticket_message) berdasarkan id_ticket, data akan ditampung dalam parameter 'message'
-			$data['message'] = $this->model->message_ticket($id)->result();
+	// 		//Message setiap tiket, get dari model (ticket_message) berdasarkan id_ticket, data akan ditampung dalam parameter 'message'
+	// 		$data['message'] = $this->model->message_ticket($id)->result();
 
-			//Load template
-			$this->load->view('template', $data);
-		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan Teknisi
-			//Akan dibawa ke Controller Errorpage
-			redirect('Errorpage');
-		}
-	}
+	// 		//Load template
+	// 		$this->load->view('template', $data);
+	// 	} else {
+	// 		//Bagian ini jika role yang mengakses tidak sama dengan Teknisi
+	// 		//Akan dibawa ke Controller Errorpage
+	// 		redirect('Errorpage');
+	// 	}
+	// }
 
 	public function submitMessage($id)
 	{
@@ -533,6 +533,144 @@ class Ticket_teknisi extends MY_Controller
 				//Akan dibawa ke Controller Errorpage
 				redirect('Errorpage');
 			}
+		}
+	}
+
+	public function list_approve()
+	{
+		if ($this->session->userdata('level') == "Technician") {
+			$data['title']    = "Persetujuan Tiket Masuk";
+			$data['desc']     = "Tiket baru yang menunggu persetujuan Anda";
+			$data['navbar']   = "navbar";
+			$data['sidebar']  = "sidebar";
+			$data['body']     = "ticketTeknisi/listapprove";
+
+			$id_user = $this->session->userdata('id_user');
+
+			// Memanggil fungsi model untuk mengambil tiket yang perlu di-approve oleh teknisi ini
+			$data['approve'] = $this->model->ticket_for_technician_approval($id_user)->result();
+
+			$this->load->view('template', $data);
+		} else {
+			redirect('Errorpage');
+		}
+	}
+
+	// 6. TAMBAHKAN METHOD BARU INI
+	public function detail_approve($id)
+	{
+		if ($this->session->userdata('level') == "Technician") {
+			$data['title']    = "Detail Persetujuan Tiket";
+			$data['navbar']   = "navbar";
+			$data['sidebar']  = "sidebar";
+			$data['body']     = "ticketTeknisi/detailapprove";
+			$data['detail']   = $this->model->detail_ticket($id)->row_array();
+			$data['tracking'] = $this->model->tracking_ticket($id)->result();
+			$data['message']  = $this->model->message_ticket($id)->result();
+			$this->load->view('template', $data);
+		} else {
+			redirect('Errorpage');
+		}
+	}
+
+
+	public function terima_tugas($id)
+	{
+		if ($this->session->userdata('level') == "Technician") {
+			$data['title']    = "Terima & Set Prioritas Tiket";
+			$data['navbar']   = "navbar";
+			$data['sidebar']  = "sidebar";
+			// Pastikan Anda sudah membuat view ini
+			$data['body']     = "ticketTeknisi/setprioritas";
+
+			$data['detail'] = $this->model->detail_ticket($id)->row_array();
+			$data['dd_prioritas'] = $this->model->dropdown_prioritas();
+			$data['id_prioritas'] = "";
+
+			$this->load->view('template', $data);
+		} else {
+			redirect('Errorpage');
+		}
+	}
+
+	// Ganti juga fungsi proses_terima dengan versi lengkap ini
+	public function proses_terima($id)
+	{
+		// Pastikan library form_validation sudah di-load di __construct()
+		$this->form_validation->set_rules(
+			'id_prioritas',
+			'Id_prioritas',
+			'required',
+			array('required' => '<strong>Gagal!</strong> Prioritas harus dipilih.')
+		);
+
+		if ($this->form_validation->run() == FALSE) {
+			// Jika validasi gagal, tampilkan kembali form dengan pesan error
+			$this->terima_tugas($id);
+		} else {
+			if ($this->session->userdata('level') == "Technician") {
+				$this->model->approve_tiket($id);
+				$this->model->emaildiproses($id);
+				$this->session->set_flashdata('status', 'Diterima dan sedang diproses');
+				redirect('ticket_teknisi/index_tugas');
+			} else {
+				redirect('Errorpage');
+			}
+		}
+	}
+
+	// Method untuk menampilkan form "Tolak Tugas"
+	public function tolak_tugas($id)
+	{
+		if ($this->session->userdata('level') == "Technician") {
+			$data['title']    = "Tolak Tiket";
+			$data['navbar']   = "navbar";
+			$data['sidebar']  = "sidebar";
+			$data['body']     = "ticketTeknisi/tolaktugas"; // View baru
+			$data['detail'] = $this->model->detail_ticket($id)->row_array();
+			$this->load->view('template', $data);
+		} else {
+			redirect('Errorpage');
+		}
+	}
+
+	// Method untuk MEMPROSES penolakan tiket
+
+
+	/**
+	 * Memproses penolakan tiket.
+	 * Logika disalin dari Ticket.php -> reject()
+	 */
+	public function proses_tolak($id)
+	{
+		// 1. Cek hak akses di baris paling atas. Jika bukan teknisi, langsung hentikan.
+		if ($this->session->userdata('level') != "Technician") {
+			redirect('Errorpage');
+			return; // Penting untuk menghentikan eksekusi
+		}
+
+		// 2. Atur aturan validasi untuk form
+		$this->form_validation->set_rules(
+			'message',
+			'Alasan',
+			'required',
+			array('required' => '<strong>Gagal!</strong> Alasan penolakan harus diisi.')
+		);
+
+		// 3. Cek validasi
+		if ($this->form_validation->run() == FALSE) {
+			// Jika alasan kosong, tampilkan kembali halaman form tolak
+			$this->tolak_tugas($id);
+		} else {
+			// Jika validasi sukses, jalankan prosesnya
+			$alasan = $this->input->post('message');
+
+			$this->model->reject($id, $alasan);
+			$this->model->emailreject($id);
+
+			$this->session->set_flashdata('status', 'Ditolak');
+			// Arahkan kembali ke halaman daftar tiket masuk (bukan Errorpage)
+			redirect('ticket_teknisi/index_approve');
 		}
 	}
 }

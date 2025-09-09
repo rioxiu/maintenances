@@ -32,7 +32,7 @@ class Main_model extends CI_Model
       'newline'   => "\r\n",
       'wordwrap'  => TRUE,
       'validate'  => TRUE
-    );  
+    );
 
     $this->email->initialize($config);
   }
@@ -557,32 +557,49 @@ class Main_model extends CI_Model
   }
 
   //Method yang digunakan untuk melakukan approval ticket oleh teknisi
-  public function approve_tiket($id)
+  function approve_tiket($id)
   {
-    //Mengambil session teknisi
-    $id_user = $this->session->userdata('id_user');
+    // Ambil ID prioritas yang dikirim dari form teknisi
+    $id_prioritas = $this->input->post('id_prioritas');
 
-    //Melakukan update data ticket dengan mengubah status ticket menjadi 4 dan memasukkan tanggal tiket mulai diproses, data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
+    // Inisialisasi variabel untuk menghindari error
+    $waktu_respon = 0; // Default 0 hari jika tidak ditemukan
+    $nama_prioritas = "N/A";
+
+    // Lakukan pengecekan apakah id_prioritas ada dan valid
+    if (!empty($id_prioritas)) {
+      $query_prioritas = $this->db->get_where('prioritas', ['id_prioritas' => $id_prioritas]);
+
+      // Pastikan query mengembalikan hasil
+      if ($query_prioritas->num_rows() > 0) {
+        $row_prioritas = $query_prioritas->row();
+        $waktu_respon = $row_prioritas->waktu_respon;
+        $nama_prioritas = $row_prioritas->nama_prioritas;
+      }
+    }
+
+    // Siapkan array data yang akan di-update ke tabel 'ticket'
     $data = array(
-      'status'         => 4,
-      'tanggal_proses' => date("Y-m-d  H:i:s"),
-      'last_update'    => date("Y-m-d  H:i:s")
+      'id_prioritas'   => $id_prioritas,
+      'status'         => 4, // "On Process"
+      'tanggal_proses' => date("Y-m-d H:i:s"),
+      'deadline'       => date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") . ' + ' . $waktu_respon . ' days')),
+      'last_update'    => date("Y-m-d H:i:s")
     );
 
-    //Melakukan insert data tracking ticket sedang dikerjakan oleh teknisi, data tracking ke dalam array '$datatracking' yang nanti akan di-insert dengan query
-    $datatracking = array(
-      'id_ticket'  => $id,
-      'tanggal'    => date("Y-m-d  H:i:s"),
-      'status'     => "On Process",
-      'deskripsi'  => "",
-      'id_user'    => $id_user
-    );
-
-    //Query untuk melakukan update data ticket sesuai dengan array '$data' ke tabel ticket
     $this->db->where('id_ticket', $id);
     $this->db->update('ticket', $data);
 
-    //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
+    // Buat catatan baru di tabel 'tracking'
+    $id_user = $this->session->userdata('id_user');
+    $datatracking = array(
+      'id_ticket'  => $id,
+      'tanggal'    => date("Y-m-d H:i:s"),
+      'status'     => "Tiket Diterima dan Sedang Diproses",
+      'deskripsi'  => "Prioritas tiket diatur ke: " . $nama_prioritas,
+      'id_user'    => $id_user
+    );
+
     $this->db->insert('tracking', $datatracking);
   }
 
@@ -1400,7 +1417,7 @@ class Main_model extends CI_Model
       $priorityBadge = '<span style="display: inline-block; padding: 4px 8px; background-color: #FFB701; color: #FFB701; border-radius: 12px; font-size: 12px; font-weight: bold;">' . $query->nama_prioritas . '</span>';
     }
 
-    
+
     $replacements = array(
       '{ID_TICKET}' => $query->id_ticket,
       '{NAMA}' => $query->nama,
@@ -1851,5 +1868,27 @@ class Main_model extends CI_Model
     } else {
       echo 'Success to send email';
     }
+  }
+
+  public function get_teknisi_by_kategori($id_sub_kategori)
+  {
+    $this->db->select('pegawai.id_user'); // Ambil id_user teknisi
+    $this->db->from('sub_kategori');
+    $this->db->join('pegawai', 'sub_kategori.id_teknisi_default = pegawai.id_user');
+    $this->db->where('sub_kategori.id_sub_kategori', $id_sub_kategori);
+    return $this->db->get()->row();
+  }
+
+
+  public function ticket_for_technician_approval($id_user)
+  {
+    $this->db->select('*, DATEDIFF(deadline, tanggal) as estimasi');
+    $this->db->from('ticket');
+    $this->db->join('pegawai', 'ticket.id_user = pegawai.id_user');
+    $this->db->join('lokasi', 'ticket.id_lokasi = lokasi.id_lokasi');
+    $this->db->where('ticket.teknisi', $id_user);
+    $this->db->where('ticket.status', 3); // Hanya tiket berstatus "Assigned"
+    $this->db->order_by('ticket.id_ticket', 'DESC');
+    return $this->db->get();
   }
 }

@@ -70,13 +70,13 @@
 							<div id="div-order"></div>
 						</div>
 
-						<div class="form-group mb-3">
+						<!-- <div class="form-group mb-3">
 							<label class="mb-2 font-weight-bold text-primary">Teknisi</label>
 							<?= form_dropdown('id_teknisi', $dd_teknisi, set_value('id_teknisi'), 'id="id_teknisi" class="form-control select2 ' . (form_error('id_teknisi') ? "is-invalid" : "") . '" style="width: 100% !important"'); ?>
 							<div class="invalid-feedback">
 								<?= form_error('id_teknisi'); ?>
 							</div>
-						</div>
+						</div> -->
 
 						<div class="form-group">
 							<div id="div-order2"></div>

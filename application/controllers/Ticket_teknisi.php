@@ -13,12 +13,14 @@ class Ticket_teknisi extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		//Meload model
 		$this->load->model('Main_model', 'model');
 
-		//Jika session tidak ditemukan
+		// ==========================================================
+		// PERBAIKAN 1: Muat library form_validation di sini
+		// ==========================================================
+		$this->load->library('form_validation');
+
 		if (!$this->session->userdata('id_user')) {
-			//Kembali ke halaman Login
 			$this->session->set_flashdata('status1', 'expired');
 			redirect('login');
 		}
@@ -643,13 +645,13 @@ class Ticket_teknisi extends MY_Controller
 	 */
 	public function proses_tolak($id)
 	{
-		// 1. Cek hak akses di baris paling atas. Jika bukan teknisi, langsung hentikan.
+		// Cek hak akses di awal
 		if ($this->session->userdata('level') != "Technician") {
 			redirect('Errorpage');
-			return; // Penting untuk menghentikan eksekusi
+			return;
 		}
 
-		// 2. Atur aturan validasi untuk form
+		// Menggunakan '$this->' (dengan panah), bukan 'this.'
 		$this->form_validation->set_rules(
 			'message',
 			'Alasan',
@@ -657,19 +659,18 @@ class Ticket_teknisi extends MY_Controller
 			array('required' => '<strong>Gagal!</strong> Alasan penolakan harus diisi.')
 		);
 
-		// 3. Cek validasi
+		// Menggunakan '$this->' (dengan panah), bukan 'this.'
 		if ($this->form_validation->run() == FALSE) {
-			// Jika alasan kosong, tampilkan kembali halaman form tolak
+			// Jika validasi gagal, kembali ke form
 			$this->tolak_tugas($id);
 		} else {
-			// Jika validasi sukses, jalankan prosesnya
+			// Jika validasi sukses
 			$alasan = $this->input->post('message');
 
 			$this->model->reject($id, $alasan);
 			$this->model->emailreject($id);
 
 			$this->session->set_flashdata('status', 'Ditolak');
-			// Arahkan kembali ke halaman daftar tiket masuk (bukan Errorpage)
 			redirect('ticket_teknisi/index_approve');
 		}
 	}

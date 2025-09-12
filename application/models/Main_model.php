@@ -1891,4 +1891,38 @@ class Main_model extends CI_Model
     $this->db->order_by('ticket.id_ticket', 'DESC');
     return $this->db->get();
   }
+
+
+  // application/models/Main_model.php
+
+// TAMBAHKAN FUNGSI BARU INI
+function reject_tugas_teknisi($id, $alasan)
+{
+    // Menggunakan transaksi database untuk memastikan semua query berhasil
+    $this->db->trans_start();
+
+    // 1. Mengembalikan status tiket menjadi 'Menunggu Persetujuan' (status 2)
+    //    dan mengosongkan id_teknisi agar bisa ditugaskan ke teknisi lain.
+    $data_ticket = array(
+        'status' => 2,
+        'id_teknisi' => NULL
+    );
+    $this->db->where('id_ticket', $id);
+    $this->db->update('ticket', $data_ticket);
+
+    // 2. Menyimpan alasan penolakan dari teknisi ke dalam tabel pesan/tracking
+    $data_message = array(
+        'id_ticket' => $id,
+        'id_user'   => $this->session->userdata('id_user'), // ID teknisi yang menolak
+        'message'   => "Tugas ditolak oleh teknisi dengan alasan: " . htmlspecialchars($alasan),
+        'status'    => 1, // Status pesan (bisa disesuaikan jika perlu)
+        'tanggal'   => date("Y-m-d H:i:s")
+    );
+    $this->db->insert('ticket_message', $data_message);
+
+    $this->db->trans_complete();
+
+    // Mengembalikan status transaksi (true jika berhasil, false jika gagal)
+    return $this->db->trans_status();
+}
 }

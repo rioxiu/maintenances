@@ -2,6 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 // General
+
+$lang['subject'] = "Subject"; // <--- TAMBAHKAN BARIS INI
+$lang['detail_problem'] = "Detail Problem"; // <--- DAN TAMBAHKAN BARIS INI
 $lang['dashboard_title'] = "Dashboard";
 $lang['dashboard_assigned_tickets'] = "Tiket Ditugaskan";
 $lang['dashboard_task_list']= "Daftar Tugas";
@@ -73,14 +76,14 @@ $lang['ticket_list_subtitle'] ='Daftar semua tiket yang sudah kamu submit.';
 $lang['ticket_create_title'] = "Buat Tiket Baru";
 $lang['ticket_create_subtitle'] = "Kirim dan simpulkan masalah Anda kepada team Teknisi.";
 $lang['ticket_create_form_title'] = "Form Pengajuan Tiket";
-$lang ['ticket_create_issue'] = "Jenis Perbaikan";
+$lang['ticket_create_issue'] = "Jenis Perbaikan";
 $lang['ticket_create_department'] = "Departemen";
 $lang['ticket_create_location'] = "Lokasi";
 $lang['ticket_create_subject'] = "Subject";
 $lang['ticket_create_description'] = "Deskripsi";
 $lang['ticket_create_attachment'] = "Lampiran (Media)";
 $lang['ticket_create_attachment_subtitle'] = "Maksimal ukuran 25MB. Format file: gif, jpg, png, or pdf.";
-$lang['ticket_create_attachment_choose file'] = "Pilih File";
+$lang['ticket_create_attachment_choose_file'] = "Pilih File";
 $lang['ticket_create_submit'] = "Submit";
 $lang['ticket_create_assign_to_me'] = "Tugaskan ke Teknisi";
 

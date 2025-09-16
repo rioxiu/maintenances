@@ -108,8 +108,8 @@ class Ticket_user extends MY_Controller
 		);
 
 		// Validasi lain
-		$this->form_validation->set_rules('problem_summary', 'Problem_summary', 'required');
-		$this->form_validation->set_rules('problem_detail', 'Problem_detail', 'required');
+		$this->form_validation->set_rules('problem_summary',  $this->lang->line('subject'), 'required');
+		$this->form_validation->set_rules('problem_detail', $this->lang->line('detail_problem'), 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->buat_ticket();

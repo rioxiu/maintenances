@@ -11,7 +11,7 @@ $lang['dashboard_title'] = "仪表盘";
 $lang['dashboard_assigned_tickets'] = "门票已分配";
 $lang['dashboard_task_list']= "任务清单";
 $lang['dashboard_new_tickets'] = "新票";
-$lang ['dashboard_total_tickets'] = "工单总数";
+$lang['dashboard_total_tickets'] = "工单总数";
 $lang['dashboard_tickets_onprocess'] = "处理中工单";
 $lang['dashboard_tickets_rejected'] = "拒绝";
 $lang['dashboard_tickets_pending'] = "待处理";
@@ -66,8 +66,9 @@ $lang['dashboard_table_tickets_progress'] = "进展";
 
 //LISTTICKET
 $lang['ticket_list_title'] = "工单列表";
-$lang['ticket_list_subtitle'] ='列出你已经提交的所有票据';
-
+$lang['ticket_list_subtitle'] ="列出你已经提交的所有票据";
+$lang['subject'] = "主题"; // <--- TAMBAHKAN BARIS INI
+$lang['detail_problem'] = "问题详情"; // <--- DAN TAMBAHKAN BARIS INI
 
 
 //buat ticket
@@ -81,7 +82,7 @@ $lang['ticket_create_subject'] = "主题";
 $lang['ticket_create_description'] = "描述";
 $lang['ticket_create_attachment'] = "附件（媒体）";
 $lang['ticket_create_attachment_subtitle'] = "最大大小为25MB。文件格式：gif、jpg、png 或 pdf。";
-$lang['ticket_create_attachment_choose file'] = "选择文件";
+$lang['ticket_create_attachment_choose_file'] = "选择文件";
 $lang['ticket_create_submit'] = "提交";
 $lang['ticket_create_assign_to_me'] = "分配给技术员";
 

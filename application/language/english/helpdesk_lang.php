@@ -82,6 +82,7 @@ $lang['ticket_create_attachment'] = "Lampiran (Media)";
 $lang['ticket_create_attachment_subtitle'] = "Maksimal ukuran 25MB. Format file: gif, jpg, png, or pdf.";
 $lang['ticket_create_attachment_choose file'] = "Pilih File";
 $lang['ticket_create_submit'] = "Submit";
+$lang['ticket_create_assign_to_me'] = "Tugaskan ke Teknisi";
 
 
 

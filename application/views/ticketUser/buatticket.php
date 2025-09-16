@@ -68,7 +68,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="font-weight-bold">Tugaskan ke Teknisi<span class="text-danger small">*Required</span></label>
+						<label class="font-weight-bold"><?=lang(line:"ticket_create_assign_to_me")?><span class="text-danger small">*Required</span></label>
 						<?php
 						$dd_teknisi_attribute = 'class="form-control ' . (form_error('id_teknisi') ? "is-invalid" : "") . '" id="id_teknisi" required';
 						echo form_dropdown('id_teknisi', $dd_teknisi, set_value('id_teknisi', $id_teknisi), $dd_teknisi_attribute);

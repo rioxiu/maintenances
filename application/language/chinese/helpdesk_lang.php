@@ -83,7 +83,7 @@ $lang['ticket_create_attachment'] = "附件（媒体）";
 $lang['ticket_create_attachment_subtitle'] = "最大大小为25MB。文件格式：gif、jpg、png 或 pdf。";
 $lang['ticket_create_attachment_choose file'] = "选择文件";
 $lang['ticket_create_submit'] = "提交";
-
+$lang['ticket_create_assign_to_me'] = "分配给技术员";
 
 //detail ticket
 

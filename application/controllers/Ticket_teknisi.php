@@ -577,7 +577,7 @@ class Ticket_teknisi extends MY_Controller
 	public function terima_tugas($id)
 	{
 		if ($this->session->userdata('level') == "Technician") {
-			$data['title']    = "Terima & Set Prioritas Tiket";
+			$data['title']    = lang(line:"setPriority_title");
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
 			// Pastikan Anda sudah membuat view ini

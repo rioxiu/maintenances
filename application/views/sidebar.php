@@ -103,12 +103,12 @@
 		<li class="nav-item">
 			<a class="nav-link" href="<?= site_url('ticket_teknisi/index_approve') ?>">
 				<i class="fas fa-fw fa-inbox"></i>
-				<span>Tiket Masuk</span></a>
+				<span><?= lang(line:"technician_entrance_tickets") ?></span></a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" href="<?= site_url('ticket_teknisi/index_tugas') ?>">
 				<i class="fas fa-fw fa-tasks"></i>
-				<span>Daftar Tugas Saya</span></a>
+				<span><?= lang(line:"technician_list_tickets") ?></span></a>
 		</li>
 	<?php
 	} else if ($this->session->userdata('level') == "User") { ?>

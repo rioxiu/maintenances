@@ -120,7 +120,22 @@ $lang['technician_list_title'] = "技术人员列表";
 $lang['technician_list_subtitle'] = "列出所有分配给您的待审批的工单。";
 $lang['technician_information'] = '请前往“仪表盘”菜单 -> “任务列表”以更新工单进度。';
 $lang['technician_list_information'] = "列出所有分配给您的票据。";
+$lang['technician_entrance_tickets'] = "入场券";
+$lang['technician_list_tickets'] = "我的任务清单";
 //verb
 
 $lang['by'] = "由";
 $lang['click_to_zoom'] = "点击放大";
+
+
+$lang['saved']= "保存";
+$lang['cancel']= "取消";
+
+//setpriority
+$lang['setPriority_title'] = "接收并设置工单优先级";
+$lang['setPriority_subtitle'] = "优先级与技术人员表单";
+$lang['setPriority_choose_priority'] = "选择优先级";
+$lang['setPriority_title'] = "接收并设置工单优先级";
+$lang['setPriority_tab_setpriority'] = "设置优先级";
+$lang['setPriority_tab_setpriority'] = "设置优先级和技术人员";
+$lang['setPriority_tab_detail'] = "工单详情";

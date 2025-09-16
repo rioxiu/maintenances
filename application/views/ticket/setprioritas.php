@@ -55,7 +55,7 @@
 			<div class="card shadow mb-4">
 				<div class="card-body">
 					<h5 class="mb-4 font-weight-bold text-dark">
-						Form Prioritas &amp; Teknisi
+						<?= lang(line:"setPriority_subtitle") ?>
 					</h5>
 					<form method="post" action="<?= site_url('ticket/approve/' . $detail['id_ticket']) ?>" enctype="multipart/form-data">
 						<div class="form-group mb-3">

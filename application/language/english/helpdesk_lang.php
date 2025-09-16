@@ -120,10 +120,19 @@ $lang['technician_list_title'] = "Daftar Teknisi";
 $lang['technician_list_subtitle'] = "Daftar semua tiket yang Ditugaskan untuk Anda menunggu approval.";
 $lang['technician_information'] = 'Silahkan ke menu Dashboard -> Daftar Tugas untuk update progress tiket.';
 $lang['technician_list_information'] = "Daftar semua tiket yang Ditugaskan untuk Anda.";
+$lang['technician_entrance_tickets'] = "Tiket Masuk";
+$lang['technician_list_tickets'] = "Daftar Tugas Saya";
 //verb
 
 $lang['by'] = "Oleh";
 $lang['click_to_zoom'] = "Klik untuk memperbesar";
+$lang['saved']= "Simpan";
+$lang['cancel']= "Batal";
 
-
+//setpriority
+$lang['setPriority_title'] = "Terima & Set Prioritas Tiket";
+$lang['setPriority_subtitle'] = "Form Prioritas & Teknisi";
+$lang['setPriority_choose_priority'] = "Pilih Prioritas";
+$lang['setPriority_tab_setpriority'] = "Set Prioritas & Teknisi";
+$lang['setPriority_tab_detail'] = "Detail Tiket";
 // ... dan seterusnya untuk setiap teks yang ada di halaman dashboard.

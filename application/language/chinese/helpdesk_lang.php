@@ -139,3 +139,14 @@ $lang['setPriority_title'] = "接收并设置工单优先级";
 $lang['setPriority_tab_setpriority'] = "设置优先级";
 $lang['setPriority_tab_setpriority'] = "设置优先级和技术人员";
 $lang['setPriority_tab_detail'] = "工单详情";
+
+
+//tolaktiket
+
+$lang['refuse_title'] = "拒绝工单";
+$lang['refuse_sender'] = "接收者";
+$lang['refuse_subject'] = "主题";
+$lang['refuse_reason'] = "原因";
+$lang['refuse_sent'] = "发送";
+$lang['refuse_cancel'] = "取消";
+$lang['refuse_reason_placeholder'] = "请输入拒绝此票据的原因。";

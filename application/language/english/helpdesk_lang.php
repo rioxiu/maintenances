@@ -136,3 +136,14 @@ $lang['setPriority_choose_priority'] = "Pilih Prioritas";
 $lang['setPriority_tab_setpriority'] = "Set Prioritas & Teknisi";
 $lang['setPriority_tab_detail'] = "Detail Tiket";
 // ... dan seterusnya untuk setiap teks yang ada di halaman dashboard.
+
+
+//tolaktiket
+
+$lang['refuse_title'] = "Tolak Tiket";
+$lang['refuse_sender'] = "Penerima";
+$lang['refuse_subject'] = "Subjek";
+$lang['refuse_reason'] = "Alasan";
+$lang['refuse_sent'] = "Kirim";
+$lang['refuse_cancel'] = "Batal";
+$lang['refuse_reason_placeholder'] = "Masukkan alasan mengapa tiket ini ditolak.";

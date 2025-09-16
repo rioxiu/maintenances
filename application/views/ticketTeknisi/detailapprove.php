@@ -48,42 +48,42 @@
 									<?php } ?>
 								</div>
 								<div class="card-body">
-									<h6 class="m-0 text-primary">Pemohon</h6>
+									<h6 class="m-0 text-primary"><?= lang(line: "ticket_detail_ticket_user")?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['nama'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Email</h6>
+									<h6 class="m-0 text-primary"><?= lang(line: "ticket_detail_ticket_email")?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['email'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Telepon</h6>
+									<h6 class="m-0 text-primary"><?= lang(line: "ticket_detail_ticket_telephone")?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['telp'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Departemen</h6>
+									<h6 class="m-0 text-primary"><?= lang(line: "ticket_detail_ticket_department")?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['nama_dept'] . " (" . $detail['nama_bagian_dept'] . ")" ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Tanggal</h6>
+									<h6 class="m-0 text-primary"><?= lang(line: "ticket_detail_ticket_date")?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['tanggal'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Lokasi</h6>
+									<h6 class="m-0 text-primary"><?= lang(line: "ticket_detail_ticket_location")?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['lokasi'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Kategori</h6>
+									<h6 class="m-0 text-primary"><?= lang(line: "ticket_detail_tickets_category")?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['nama_kategori'] . " (" . $detail['nama_sub_kategori'] . ")" ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Prioritas</h6>
+									<h6 class="m-0 text-primary"><?= lang(line: "ticket_detail_ticket_priority")?></h6>
 									<div class="font-weight-bold">
 										<?php if ($detail['id_prioritas'] == 0) { ?>
 											Will be determined
@@ -95,7 +95,7 @@
 										<?php } ?>
 									</div>
 									<hr>
-									<h6 class="m-0text-primary">Progress <span class="float-right text-primary"><?= $detail['progress'] ?>%</span></h6>
+									<h6 class="m-0text-primary"><?= lang(line: "ticket_detail_ticket_progress")?><span class="float-right text-primary"><?= $detail['progress'] ?>%</span></h6>
 									<div class="progress mb-4">
 										<div class="progress-bar" role="progressbar" style="width: <?= $detail['progress'] ?>%" aria-valuenow="<?= $detail['progress'] ?>" aria-valuemin="0" aria-valuemax="100">
 										</div>

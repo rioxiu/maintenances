@@ -5,13 +5,17 @@
 
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		<li class="nav-item" role="presentation">
-			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Detail Tiket</a>
+			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+				<?= lang(line:"setPriority_tab_detail") ?>
+			</a>
 		</li>
 		<li class="nav-item" role="presentation">
-			<a class="nav-link" id="lacak-tab" data-toggle="tab" href="#lacak" role="tab" aria-controls="lacak" aria-selected="false">Sistem Lacak</a>
+			<a class="nav-link" id="lacak-tab" data-toggle="tab" href="#lacak" role="tab" aria-controls="lacak" aria-selected="false">
+				<?= lang(line:"ticket_detail_tab_sistemlacak" ) ?>
+			</a>
 		</li>
 		<li class="nav-item" role="presentation">
-			<a class="nav-link" id="proses-tab" data-toggle="tab" href="#proses" role="tab" aria-controls="proses" aria-selected="false"><?= " Diproses oleh " . $detail['nama_teknisi'] ?></a>
+			<a class="nav-link" id="proses-tab" data-toggle="tab" href="#proses" role="tab" aria-controls="proses" aria-selected="false"><?= lang(line:"ticket_detail_tab_reply_technician") . " ". $detail['nama_teknisi'] ?></a>
 		</li>
 	</ul>
 	<div class="tab-content" id="myTabContent">
@@ -21,7 +25,7 @@
 					<div class="row">
 						<div class="col-md-4">
 							<h5 class="mb-3 font-weight-bold text-dark">
-								Ticket Information
+								<?= lang(line:'ticket_detail_ticket_information') ?>
 							</h5>
 							<div class="card">
 								<div class="card-header font-weight-bold">
@@ -181,7 +185,9 @@
 		<div class="tab-pane fade" id="lacak" role="tabpanel" aria-labelledby="lacak-tab">
 			<div class="card shadow-sm border-0 mb-4">
 				<div class="card-body">
-					<h5 class="mb-3 font-weight-bold text-dark">Sistem Pelacakan</h5>
+					<h5 class="mb-3 font-weight-bold text-dark">
+						<?=lang(line:"ticket_detail_tab_sistemlacak")?>
+					</h5>
 					<?php $no = 1;
 					foreach ($tracking as $row) { ?>
 						<?php if ($no == 1) {
@@ -199,7 +205,7 @@
 							</div>
 							<div class="tracking-content">
 								<div class="font-weight-bold text-primary"><?= $row->status ?></div>
-								<h4 class="small font-weight-bold">Oleh: <?= $row->nama ?></h4>
+								<h4 class="small font-weight-bold"><?= lang(line:"by") . " " ?><?= $row->nama ?></h4>
 								<?php if ($row->filefoto != "") { ?>
 									<?php if (pathinfo($row->filefoto, PATHINFO_EXTENSION) == 'pdf') { ?>
 										<p><?= nl2br($row->deskripsi) ?></p>
@@ -234,14 +240,16 @@
 		<div class="tab-pane fade" id="proses" role="tabpanel" aria-labelledby="proses-tab">
 			<div class="card shadow-sm border-0 mb-4">
 				<div class="card-body">
-					<h5 class="mb-3 font-weight-bold text-dark"><?= " Diproses Oleh " . $detail['nama_teknisi'] ?></h5>
-					<h6 class="font-weight-bold text-primary">Progress <span class="float-right text-primary"><?= $detail['progress'] ?>%</span></h6>
+					<h5 class="mb-3 font-weight-bold text-dark"><?= lang(line:"ticket_detail_tab_reply_technician") ." " . $detail['nama_teknisi'] ?></h5>
+					<h6 class="font-weight-bold text-primary"><?= lang(line:"ticket_detail_ticket_progress")?><span class="float-right text-primary"><?= $detail['progress'] ?>%</span></h6>
 					<div class="progress mb-4">
 						<div class="progress-bar" role="progressbar" style="width: <?= $detail['progress'] ?>%" aria-valuenow="<?= $detail['progress'] ?>" aria-valuemin="0" aria-valuemax="100">
 						</div>
 					</div>
 					<hr>
-					<h6 class="m-0 font-weight-bold text-primary">Tanggal Deadline</h6>
+					<h6 class="m-0 font-weight-bold text-primary">
+						<?= lang(line:"ticket_detail_dateline")?>
+					</h6>
 					<div class="font-weight-bold">
 						<?php if ($detail['deadline'] == "0000-00-00 00:00:00") {
 							echo "Belum diset";
@@ -250,7 +258,9 @@
 						<?php } ?><br>
 					</div>
 					<hr>
-					<h6 class="m-0 font-weight-bold text-primary">Tanggal Proses</h6>
+					<h6 class="m-0 font-weight-bold text-primary">
+						<?= lang(line:"ticket_detail_process_date")?>
+					</h6>
 					<div class="font-weight-bold">
 						<?php if ($detail['tanggal_proses'] == "0000-00-00 00:00:00") {
 							echo "Belum dimulai";
@@ -259,7 +269,9 @@
 						<?php } ?><br>
 					</div>
 					<hr>
-					<h6 class="m-0 font-weight-bold text-primary">Tanggal Selesai (Solved)</h6>
+					<h6 class="m-0 font-weight-bold text-primary">
+						<?= lang(line:"ticket_detail_solved_date")?>
+					</h6>
 					<div class="font-weight-bold">
 						<?php if ($detail['tanggal_solved'] == "0000-00-00 00:00:00") {
 							echo "Belum selesai";

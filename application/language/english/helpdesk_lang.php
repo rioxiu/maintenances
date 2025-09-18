@@ -147,3 +147,20 @@ $lang['refuse_reason'] = "Alasan";
 $lang['refuse_sent'] = "Kirim";
 $lang['refuse_cancel'] = "Batal";
 $lang['refuse_reason_placeholder'] = "Masukkan alasan mengapa tiket ini ditolak.";
+
+
+$lang['detailupdate_update_progress'] = "Update Progress";
+$lang['detailupdate_change_category'] = "Ganti Kategori";
+$lang['detailupdate_detail_ticket'] = "Detail Tiket";
+$lang['detailupdate_form_update_progress'] = "Form Update Progress";
+$lang['detailupdate_form_description_worker'] = "Deskripsi Pekerjaan";
+$lang['detailupdate_progress'] = "Progress";
+$lang['detailupdate_progress_placeholder'] = "*Jelaskan Deskripsi Pekerjaan Anda terlebih dahulu sebelum memilih progress." ;
+$lang['detailupdate_attachment'] = "Lampiran (Media)";
+$lang['detailupdate_attachment_placeholder'] = "Maks. Size 25 MB. Format file: gif, jpg, png, or pdf.";
+$lang['detailupdate_signature'] = "Tanda Tangan";
+$lang['detailupdate_clear_signature'] = "Clear";
+$lang['detailupdate_signature_button'] = "Simpan Tanda Tangan";
+$lang['detailupdate_saved'] = "Simpan";
+$lang['detailupdate_cancel'] = "Batal";
+

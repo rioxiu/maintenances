@@ -32,13 +32,15 @@
 
 <div class="container-fluid">
 	<div class="d-sm-flex align-items-center justify-content-between">
-		<h1 class="h3 mb-3 text-gray-800 font-weight-bold"><?= $title; ?> #<?= $detail['id_ticket'] ?></h1>
+		<h1 class="h3 mb-3 text-gray-800 font-weight-bold"><?= lang(line:"detailupdate_update_progress") ?> #<?= $detail['id_ticket'] ?></h1>
 
 		<a href="<?= site_url('ticket_teknisi/change_category/' . $detail['id_ticket']) ?>" class="btn btn-warning text-dark btn-icon-split change">
 			<span class="icon text-dark">
 				<i class="fas fa-edit"></i>
 			</span>
-			<span class="text">Ganti Kategori</span>
+			<span class="text">
+				<?= lang(line:"detailupdate_change_category") ?>
+			</span>
 		</a>
 	</div>
 
@@ -46,10 +48,10 @@
 
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		<li class="nav-item" role="presentation">
-			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Update Progress</a>
+			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><?= lang(line:"detailupdate_update_progress") ?></a>
 		</li>
 		<li class="nav-item" role="presentation">
-			<a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">Detail Tiket</a>
+			<a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false"><?= lang(line:"detailupdate_detail_ticket") ?></a>
 		</li>
 	</ul>
 	<div class="tab-content" id="myTabContent">
@@ -57,11 +59,11 @@
 			<div class="card shadow mb-4">
 				<div class="card-body">
 					<h5 class="mb-3 font-weight-bold text-dark">
-						Form Update Progress
+						<?= lang(line:"detailupdate_form_update_progress") ?>
 					</h5>
 					<form method="post" action="<?= site_url('ticket_teknisi/update_progress/' . $detail['id_ticket']) ?>" enctype="multipart/form-data">
 						<div class="form-group">
-							<label class="mb-2 font-weight-bold text-primary">Deskripsi Pekerjaan <span class="text-danger small">*Required</span></label>
+							<label class="mb-2 font-weight-bold text-primary"><?= lang(line:"detailupdate_form_description_worker") ?> <span class="text-danger small">*Required</span></label>
 							<textarea name="desk" class="form-control <?= (form_error('desk') ? "is-invalid" : "") ?>" rows="8" id="desk"><?= set_value('desk'); ?></textarea>
 							<div class="invalid-feedback">
 								<?= form_error('desk'); ?>
@@ -69,11 +71,11 @@
 						</div>
 
 						<div class="form-group mb-3">
-							<label class="font-weight-bold text-primary">Progress <span class="text-danger small">*Required</span></label>
-							<p class="mb-2 small text-muted">*Jelaskan Deskripsi Pekerjaan Anda terlebih dahulu sebelum memilih progress.</p>
+							<label class="font-weight-bold text-primary"><?= lang(line:"detailupdate_progress") ?> <span class="text-danger small">*Required</span></label>
+							<p class="mb-2 small text-muted"><?= lang(line:"detailupdate_progress_placeholder") ?> </p>
 							<select name="progress" class="form-control <?= (form_error('progress') ? "is-invalid" : "") ?>" id="progress">
 								<?php for ($i = $detail['progress']; $i <= 100; $i += 10) { ?>
-									<option value="<?= $i; ?>" <?php if ($i == set_value('progress')) echo "selected = 'selected'" ?>>Progress <?= $i; ?> %</option>
+									<option value="<?= $i; ?>" <?php if ($i == set_value('progress')) echo "selected = 'selected'" ?>><?= lang(line:"detailupdate_progress") ?>  <?= $i; ?> %</option>
 								<?php } ?>
 							</select>
 							<div class="invalid-feedback">
@@ -82,8 +84,8 @@
 						</div>
 
 						<div class="form-group mb-4">
-							<h6 class="mb-1 font-weight-bold text-primary">Lampiran (Media) <span class="text-danger small">*Required</span></h6>
-							<p class="small">Maks. Size 25 MB. Format file: gif, jpg, png, or pdf.</p>
+							<h6 class="mb-1 font-weight-bold text-primary"><?= lang(line:"detailupdate_attachment") ?> <span class="text-danger small">*Required</span></h6>
+							<p class="small"><?= lang(line:"detailupdate_attachment_placeholder") ?></p>
 							<input type="file" name="fileupdate" class="<?= (form_error('fileupdate') ? "is-invalid" : "") ?>">
 							<div class="invalid-feedback">
 								<?= form_error('fileupdate'); ?>
@@ -91,12 +93,12 @@
 						</div>
 
 						<div class="form-group mb-3">
-							<label class="mb-2 font-weight-bold text-primary">Tanda Tangan</label>
+							<label class="mb-2 font-weight-bold text-primary"><?= lang(line:"detailupdate_signature") ?></label>
 							<div class="mb-2">
 								<button type="button" class="btn btn-default btn-sm" id="undo"><i class="fa fa-undo"></i> Undo</button>
 								<button type="button" class="btn btn-danger btn-sm" id="clear"><i class="fa fa-eraser"></i> Clear</button>
 							</div>
-							<button type="button" class="btn btn-success btn-sm mb-2" id="save-png"><i class="fas fa-file-signature"></i> Simpan Tanda Tangan <i class="fas fa-arrow-right"></i></button>
+							<button type="button" class="btn btn-success btn-sm mb-2" id="save-png"><i class="fas fa-file-signature"></i> <?= lang(line:"detailupdate_signature_button") ?> <i class="fas fa-arrow-right"></i></button>
 							<div class="row">
 								<div class="col-md-4">
 									<canvas id="signature-pad" class="signature-pad"></canvas>
@@ -115,8 +117,8 @@
 							</div>
 						</div>
 						<br />
-						<button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-						<button type="button" class="btn btn-danger" onclick="window.location='<?= site_url('ticket_teknisi/index_tugas') ?>'">Batal</button>
+						<button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <?= lang(line:"detailupdate_saved") ?></button>
+						<button type="button" class="btn btn-danger" onclick="window.location='<?= site_url('ticket_teknisi/index_tugas') ?>'"><?= lang(line:"detailupdate_cancel") ?></button>
 					</form>
 				</div>
 			</div>
@@ -127,41 +129,43 @@
 					<div class="row">
 						<div class="col-md-4">
 							<h5 class="mb-3 font-weight-bold text-dark">
-								Ticket Information
+								<?= lang(line:'ticket_detail_ticket_information') ?>
 							</h5>
 							<div class="card">
 								<div class="card-body">
-									<h6 class="m-0 text-primary">Pemohon</h6>
+									<h6 class="m-0 text-primary">
+										<?= lang(line:"ticket_detail_ticket_user") ?>
+									</h6>
 									<div class="font-weight-bold">
 										<?= $detail['nama'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Email</h6>
+									<h6 class="m-0 text-primary"><?= lang(line:"ticket_detail_ticket_email") ?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['email'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Telepon</h6>
+									<h6 class="m-0 text-primary"><?= lang(line:"ticket_detail_ticket_telephone") ?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['telp'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Departemen</h6>
+									<h6 class="m-0 text-primary"><?= lang(line:"ticket_detail_ticket_department") ?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['nama_dept'] . " (" . $detail['nama_bagian_dept'] . ")" ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Tanggal</h6>
+									<h6 class="m-0 text-primary"><?= lang(line:"ticket_detail_ticket_date") ?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['tanggal'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Lokasi</h6>
+									<h6 class="m-0 text-primary">L<?= lang(line:"ticket_detail_ticket_location") ?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['lokasi'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Kategori</h6>
+									<h6 class="m-0 text-primary"><?= lang(line:"ticket_detail_tickets_category") ?></h6>
 									<div class="font-weight-bold">
 										<?= $detail['nama_kategori'] . " (" . $detail['nama_sub_kategori'] . ")" ?><br>
 									</div>
@@ -178,7 +182,7 @@
 										<?php } ?>
 									</div>
 									<hr>
-									<h6 class="m-0text-primary">Progress <span class="float-right text-primary"><?= $detail['progress'] ?>%</span></h6>
+									<h6 class="m-0text-primary"><?= lang(line:"ticket_detail_ticket_progress") ?><span class="float-right text-primary"><?= $detail['progress'] ?>%</span></h6>
 									<div class="progress mb-4">
 										<div class="progress-bar" role="progressbar" style="width: <?= $detail['progress'] ?>%" aria-valuenow="<?= $detail['progress'] ?>" aria-valuemin="0" aria-valuemax="100">
 										</div>
@@ -188,7 +192,7 @@
 
 							<br />
 
-							<h6 class="mb-2 font-weight-bold text-primary">Attachment</h6>
+							<h6 class="mb-2 font-weight-bold text-primary"><?= lang(line:"ticket_detail_ticket_attachment") ?></h6>
 							<?php if (pathinfo($detail['filefoto'], PATHINFO_EXTENSION) == 'pdf') { ?>
 								<a href="<?= base_url('uploads/' . $detail['filefoto']) ?>" class="btn btn-light btn-icon-split">
 									<span class="icon text-gray-600">
@@ -204,7 +208,7 @@
 							<?php } ?>
 						</div>
 						<div class="col-md-8">
-							<h5 class="mb-3 font-weight-bold text-dark">Sistem Pelacakan</h5>
+							<h5 class="mb-3 font-weight-bold text-dark"><?= lang(line:"ticket_detail_tab_sistemlacak") ?></h5>
 							<?php $no = 1;
 							foreach ($tracking as $row) { ?>
 								<?php if ($no == 1) {
@@ -222,7 +226,7 @@
 									</div>
 									<div class="tracking-content">
 										<div class="font-weight-bold text-primary"><?= $row->status ?></div>
-										<h4 class="small font-weight-bold">Oleh: <?= $row->nama ?></h4>
+										<h4 class="small font-weight-bold"><?= lang(line:"by")?> :<?= $row->nama ?></h4>
 										<?php if ($row->filefoto != "") { ?>
 											<?php if (pathinfo($row->filefoto, PATHINFO_EXTENSION) == 'pdf') { ?>
 												<p><?= nl2br($row->deskripsi) ?></p>
@@ -254,14 +258,14 @@
 
 							<hr />
 
-							<h5 class="mb-3 font-weight-bold text-dark"><?= " Diproses Oleh " . $detail['nama_teknisi'] ?></h5>
-							<h6 class="font-weight-bold text-primary">Progress <span class="float-right text-primary"><?= $detail['progress'] ?>%</span></h6>
+							<h5 class="mb-3 font-weight-bold text-dark"><?=  lang(line:'ticket_detail_tab_reply_technician') . " "  . $detail['nama_teknisi'] ?></h5>
+							<h6 class="font-weight-bold text-primary"><?=$lang['ticket_detail_ticket_progress'] ?> <span class="float-right text-primary"><?= $detail['progress'] ?>%</span></h6>
 							<div class="progress mb-4">
 								<div class="progress-bar" role="progressbar" style="width: <?= $detail['progress'] ?>%" aria-valuenow="<?= $detail['progress'] ?>" aria-valuemin="0" aria-valuemax="100">
 								</div>
 							</div>
 							<hr>
-							<h6 class="m-0 font-weight-bold text-primary">Tanggal Deadline</h6>
+							<h6 class="m-0 font-weight-bold text-primary"><?= lang(line:"ticket_detail_tab_sistemlacak") ?><?= lang(line:"ticket_detail_dateline") ?></h6>
 							<div class="font-weight-bold">
 								<?php if ($detail['deadline'] == "0000-00-00 00:00:00") {
 									echo "Belum diset";
@@ -270,7 +274,7 @@
 								<?php } ?><br>
 							</div>
 							<hr>
-							<h6 class="m-0 font-weight-bold text-primary">Tanggal Proses</h6>
+							<h6 class="m-0 font-weight-bold text-primary"><?= lang(line:"ticket_detail_process_date") ?></h6>
 							<div class="font-weight-bold">
 								<?php if ($detail['tanggal_proses'] == "0000-00-00 00:00:00") {
 									echo "Belum dimulai";
@@ -279,7 +283,7 @@
 								<?php } ?><br>
 							</div>
 							<hr>
-							<h6 class="m-0 font-weight-bold text-primary">Tanggal Selesai (Solved)</h6>
+							<h6 class="m-0 font-weight-bold text-primary"><?= lang(line:"ticket_detail_solved_date") ?></h6>
 							<div class="font-weight-bold">
 								<?php if ($detail['tanggal_solved'] == "0000-00-00 00:00:00") {
 									echo "Belum selesai";

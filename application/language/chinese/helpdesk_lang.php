@@ -150,3 +150,19 @@ $lang['refuse_reason'] = "原因";
 $lang['refuse_sent'] = "发送";
 $lang['refuse_cancel'] = "取消";
 $lang['refuse_reason_placeholder'] = "请输入拒绝此票据的原因。";
+
+
+$lang['detailupdate_update_progress'] = "更新进度";
+$lang['detailupdate_change_category'] = "更换类别";
+$lang['detailupdate_detail_ticket'] = "工单详情";
+$lang['detailupdate_form_update_progress'] = "更新进度表单";
+$lang['detailupdate_form_description_worker'] = "工作描述";
+$lang['detailupdate_progress'] = "进度";
+$lang['detailupdate_progress_placeholder'] = "*请先描述您的工作内容，然后再选择进度。";
+$lang['detailupdate_attachment'] = "附件（媒体）";
+$lang['detailupdate_attachment_placeholder'] = "最大大小：25MB。文件格式：gif, jpg, png 或 pdf。";
+$lang['detailupdate_signature'] = "签名";
+$lang['detailupdate_clear_signature'] = "清除";
+$lang['detailupdate_signature_button'] = "保存签名";
+$lang['detailupdate_saved'] = "保存";
+$lang['detailupdate_cancel'] = "取消";

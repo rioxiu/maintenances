@@ -42,9 +42,9 @@
                                         <a href="<?= site_url('ticket_teknisi/terima_tugas/' . $row->id_ticket) ?>" class="btn btn-success btn-circle btn-sm" title="Terima & Set Prioritas">
                                             <i class="fas fa-check"></i>
                                         </a>
-                                        <a href="<?= site_url('ticket_teknisi/tolak_tugas/' . $row->id_ticket) ?>" class="btn tolak btn-danger btn-circle btn-sm" title="Tolak Tugas">
+                                        <!-- <a href="<?= site_url('ticket_teknisi/tolak_tugas/' . $row->id_ticket) ?>" class="btn tolak btn-danger btn-circle btn-sm" title="Tolak Tugas">
                                             <i class="fas fa-times"></i>
-                                        </a>
+                                        </a> -->
                                     <?php } else if ($row->status == 5) { ?>
                                         <a href="<?= site_url('ticket_teknisi/approve/' . $row->id_ticket) ?>" class="btn btn-success btn-circle btn-sm process terima" title="Process Now">
                                             <i class="fas fa-check"></i>
